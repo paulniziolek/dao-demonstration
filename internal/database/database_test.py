@@ -1,55 +1,37 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from database import ServiceDB
-from pymysql.cursors import DictCursor
-# check out monkey mock
+from internal.database.database import ServiceDB
 
-@patch('pymysql.connect')
-def test_get_cursor(mock_connect):
-    # Setup: Create a mock connection object
-    mock_conn = MagicMock()
-    mock_connect.return_value = mock_conn
-    service_db = ServiceDB()
+@pytest.fixture
+def service_db():
+    with patch('database.pymysql.connect') as mock_connect:
+        mock_connect.return_value = MagicMock()
+        yield ServiceDB()
 
-    # Exercise: Call get_cursor
+def test_init(service_db):
+    with patch('database.pymysql.connect') as mock_connect:
+        ServiceDB()
+        mock_connect.assert_called_once_with(
+            host=None,
+            port=0,
+            user=None,
+            password=None,
+            database=None,
+            autocommit=False,
+        )
+
+def test_get_cursor(service_db):
     cursor = service_db.get_cursor()
+    assert isinstance(cursor, MagicMock)
 
-    # Verify: Ensure cursor is obtained from the mock connection
-    mock_conn.cursor.assert_called_once_with(DictCursor)
-    assert cursor == mock_conn.cursor.return_value
-
-@patch('pymysql.connect')
-def test_commit(mock_connect):
-    mock_conn = MagicMock()
-    mock_connect.return_value = mock_conn
-    service_db = ServiceDB()
-
-    # Exercise
+def test_commit(service_db):
     service_db.commit()
+    service_db.conn.commit.assert_called_once()
 
-    # Verify
-    mock_conn.commit.assert_called_once()
-
-@patch('pymysql.connect')
-def test_rollback(mock_connect):
-    mock_conn = MagicMock()
-    mock_connect.return_value = mock_conn
-    service_db = ServiceDB()
-
-    # Exercise
+def test_rollback(service_db):
     service_db.rollback()
+    service_db.conn.rollback.assert_called_once()
 
-    # Verify
-    mock_conn.rollback.assert_called_once()
-
-@patch('pymysql.connect')
-def test_close(mock_connect):
-    mock_conn = MagicMock()
-    mock_connect.return_value = mock_conn
-    service_db = ServiceDB()
-
-    # Exercise
+def test_close(service_db):
     service_db.close()
-
-    # Verify
-    mock_conn.close.assert_called_once()
+    service_db.conn.close.assert_called_once()

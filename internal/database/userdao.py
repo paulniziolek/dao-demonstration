@@ -90,5 +90,7 @@ class UserDAO:
 
     def _unmarshal_user(self, db_record: Mapping) -> User | None:
         # TODO: unmarshal gracefully when db_record is incomplete/invalid
+        if not db_record:
+            return None
         return User(**db_record)
     
