@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from internal.models.user import UserCreate, User
-from internal.database.userdao import UserDAO
-from internal.database.database import ServiceDB
+from internal.domains.mysqldb.userdao import UserDAO
+from internal.domains.mysqldb.db import ServiceDB
 from internal.handlers.user.user_handler import UserHandler
 
 app = FastAPI()

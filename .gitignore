@@ -3,3 +3,5 @@ __pycache__/
 .pytest.cache/
 .vscode/
 *.session.sql
+.pytest_cache/
+.mypy_cache/

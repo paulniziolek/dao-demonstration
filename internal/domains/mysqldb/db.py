@@ -2,14 +2,14 @@ import pymysql
 from pymysql.cursors import DictCursor
 import os
 
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_USER = os.getenv('DB_USER')
-DB_PASS = os.getenv('DB_PASS')
-DB_NAME = os.getenv('DB_NAME')
-
 class ServiceDB:
     def __init__(self):
+        DB_HOST: str = os.getenv('DB_HOST', 'default_host')
+        DB_PORT: str = os.getenv('DB_PORT', '0')
+        DB_USER: str = os.getenv('DB_USER', 'default_user')
+        DB_PASS: str = os.getenv('DB_PASS', 'default_pass')
+        DB_NAME: str = os.getenv('DB_NAME', 'default_name')
+        
         self.conn = pymysql.connect(
             host=DB_HOST,
             port=int(DB_PORT),

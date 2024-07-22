@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from internal.database.userdao import UserDAO
+from internal.domains.mysqldb.userdao import UserDAO
 from internal.models.user import User, UserCreate
 from pymysql.err import IntegrityError
 

@@ -22,3 +22,5 @@ The values for the current local environment can be set using `source setenv.sh`
 - Error handling and exception logic should (maybe) be moved to the service/handler layer, not the DAO layer. (look into this)
 - When using the above exception logic, try to specify exact exception, not just `except Exception: ...`.
 - Improved logging system
+- In internal/domains/mysqldb/db.py, include a wrapper util func for getting environ variables and asserting when they are none.
+- Improve unit testing with better mocking, especially for the UserDAO. 
