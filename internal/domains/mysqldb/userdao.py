@@ -4,7 +4,7 @@ from typing import Mapping
 from uuid import UUID
 
 class UserDAO:
-    def __init__(self, connection: ServiceDB):
+    def __init__(self, connection: ServiceDB) -> None:
         self.servicedb = connection
 
     def get_user_by_id(self, user_id: UUID) -> User | None:

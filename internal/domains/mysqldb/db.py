@@ -3,7 +3,7 @@ from pymysql.cursors import DictCursor
 import os
 
 class ServiceDB:
-    def __init__(self):
+    def __init__(self) -> None:
         DB_HOST: str = os.getenv('DB_HOST', 'default_host')
         DB_PORT: str = os.getenv('DB_PORT', '0')
         DB_USER: str = os.getenv('DB_USER', 'default_user')
