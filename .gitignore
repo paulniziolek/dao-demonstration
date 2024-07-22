@@ -5,3 +5,4 @@ __pycache__/
 *.session.sql
 .pytest_cache/
 .mypy_cache/
+*.env
